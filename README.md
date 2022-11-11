@@ -5,7 +5,6 @@
  2. npm i and after completion use command npm run dev
  3. cd client npm install
  4. in client npm start
- 
-<div align="center">
-    <img src="/screenshots/screen1.jpg" width="400px"</img> 
-</div>
+ 5. create acccount/signup with fake emailid
+ 6 login and dasboard present
+
