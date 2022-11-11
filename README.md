@@ -6,9 +6,6 @@
  3. cd client npm install
  4. in client npm start
  
-<html>
-
-<body>
-
-</body>
-</html>
+<div align="center">
+    <img src="/screenshots/screen1.jpg" width="400px"</img> 
+</div>
