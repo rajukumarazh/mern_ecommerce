@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FaAmazon } from 'react-icons/fa';
 import { getCurrentUser, login, logout } from '../../redux/actions/authAction';
 import { useSelector, useDispatch } from 'react-redux';
-import ManageToken from '../ManageToken';
+// import ManageToken from '../ManageToken';
 import { Navigate } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
@@ -91,6 +91,7 @@ function LogIn(props) {
 		// }
 	};
 	console.log('loggeduser', loggedUser);
+	loggedUser?.email == 'MrDeepakKumar@palinfocom.com' && navigate('/_admin');
 	useEffect(() => {
 		if (details.token) {
 			sessionStorage.setItem('token', details.token);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from './component/pages/Dashboard';
 import LogIn from './component/pages/LogIn';
 import { useSelector } from 'react-redux';
-import ManageToken from './component/ManageToken';
+// import ManageToken from './component/ManageToken';
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -23,11 +23,14 @@ import Register from './component/pages/Register';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import ForgotPassword from './component/pages/ForgotPassword';
+// import AdminDashboard from './component/pages/Admin/AdminDashboard';
+import AdminDashboard from './component/pages/Admin/AdminDashboard';
+import User from './component/pages/Admin/User';
 function App(props) {
 	let navigate = useNavigate();
 	let Logged = sessionStorage.getItem('token');
 	console.log('kkkkkkdfydfefd', Logged);
-
+	const currUser = useSelector((state) => state);
 	return (
 		<div>
 			<Routes>
@@ -43,7 +46,13 @@ function App(props) {
 				></Route>
 				{/* <Route exact path="/login" element={<LogIn />}></Route> */}
 
-				<Route exact path="/product" element={<PrdoductDetails />}></Route>
+				<Route
+					exact
+					// path={['/product', '/_admin/product']}
+					path="/product"
+					element={<PrdoductDetails />}
+				></Route>
+
 				<Route exact path="/cart" element={<CartDetails />}></Route>
 				<Route exact path="/checkout" element={<CheckOut />}></Route>
 				<Route exact path="/emptycart" element={<EmptyCart />}></Route>
@@ -51,6 +60,28 @@ function App(props) {
 				<Route exact path="/shipping" element={<FinalShipping />}></Route>
 				<Route exact path="/user_profile" element={<UserDashboard />}></Route>
 				<Route exact path="/register" element={<Register />}></Route>
+				<Route
+					exact
+					path="/_admin"
+					element={
+						<AdminDashboard
+							render={() =>
+								currUser.Auth.currentUser.email ==
+								'raju.kumar@palinfocom.com' ? (
+									<AdminDashboard />
+								) : (
+									<Redirect to="/dashboard" />
+								)
+							}
+						/>
+					}
+				></Route>
+				<Route exact path="/_admin_user" element={<User />}></Route>
+				<Route
+					exact
+					path="/_admin/product"
+					element={<PrdoductDetails />}
+				></Route>
 				<Route
 					exact
 					path="/forgot_password"

@@ -4,7 +4,7 @@ import ProductList from './ProductList';
 // import Product from "./Product";
 import { FaShoppingCart, FaAmazon, FaBars } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import SidebarFilter from './SidebarFilter';
 import Crousel from './Crousel';
 import Filter from './Filter';
@@ -23,9 +23,10 @@ function Dashboard() {
 	const [open, setOpen] = useState(false);
 	const [sideBar, setSidebar] = useState(false);
 	const cart = useSelector((state) => {
-		console.log('state', state);
+		// console.log('state', state);
 		return state.allProducts.products;
 	});
+	let currrUser = useSelector((state) => state);
 
 	const cart2 = useSelector((state) => {
 		return state?.cart;
@@ -37,7 +38,9 @@ function Dashboard() {
 	const headphone = useDispatch(searchHeadphone);
 	console.log('dashboard', sessionStorage.getItem('token'));
 	let data = { name: 'raju', age: 23 };
-
+	if (currrUser.Auth.currentUser.email == 'raju.kumar@palinfocom.com') {
+		return <Navigate to={'/_admin'} />;
+	}
 	return (
 		<div className="min-h-full">
 			<nav className="bg-gray-800">

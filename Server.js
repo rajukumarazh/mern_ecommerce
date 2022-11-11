@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const jwt = require('jsonwebtoken');
 const PORT = process.env.PORT;
+const multer = require('multer');
 app.use(cors());
 app.use(bodyParser.json());
 require('dotenv').config();
@@ -15,8 +16,8 @@ const shortid = require('shortid');
 const path = require('path');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
+const { deleteOne } = require('./model');
 const accessTokenSecret = 'youraccesstokensecret';
-
 const uri =
 	'mongodb+srv://raju:Ra%409058837496@crud.kjkyk5j.mongodb.net/Crud?retryWrites=true&w=majority';
 const options = {
@@ -49,22 +50,6 @@ app.post('/login', async (req, res) => {
 	// res.json({ status: 'not generated Token' });
 
 	console.log('token', accessToken);
-
-	// res.json(data);
-
-	// if (user) {
-	// 	// Generate an access token
-	// 	const accessToken = jwt.sign(
-	// 		{ username: user.email, role: user.role },
-	// 		accessTokenSecret
-	// 	);
-
-	// 	res.json({
-	// 		accessToken,
-	// 	});
-	// } else {
-	// 	res.send('Username or password incorrect');
-	// }
 });
 const port = process.env.PORT || 8000;
 app.post('/create_user', async (req, res) => {
@@ -186,6 +171,80 @@ app.get('/all_product', async (req, res) => {
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
+});
+///user related api's
+app.get('/all_user', async (req, res) => {
+	try {
+		const data = await Model.find();
+		res.json(data);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+});
+app.post('/_singleuser', async (req, res) => {
+	try {
+		console.log('das', req.body.currentUser);
+		Model.deleteOne(req.body.currentUser, (err, results) => {
+			console.log('deletedResult', results);
+			res.json(results);
+		});
+		// res.json(data);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+});
+app.post('/del_product', async (req, res) => {
+	try {
+		console.log('das', req.body.currenProdut);
+		allproduct.deleteOne(req.body.currenProdut, (err, results) => {
+			console.log('deletedResult', results);
+			res.json(results);
+		});
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+});
+// const imageUploadPath = 'D:/ReactProject/rCom/rCom/public';
+const imageUploadPath = 'D:/raju_kumar/shop1/Server/client/public';
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, imageUploadPath);
+	},
+	filename: function (req, file, cb) {
+		cb(null, `${file.originalname}`);
+	},
+});
+const imageUpload = multer({ storage: storage });
+/// image upload api for product
+app.post('/image-upload', imageUpload.array('my-image-file'), (req, res) => {
+	// console.log('Axios POST body: ', req.files[0].originalname);
+	let ur = `./${req.files[0].originalname}`;
+	res.send(ur);
+});
+/// update product
+app.post('/update_product', async (req, res) => {
+	console.log('he', req.body);
+	const options = { new: true };
+	let id = req.body.id;
+	let updatedData = req.body.for;
+
+	const result = await allproduct.findByIdAndUpdate(id, updatedData, options);
+	res.send(result);
+});
+app.post('/addProduct', (req, res) => {
+	// res.send("product added")
+
+	console.log('res', req.body);
+	const data = new allproduct({
+		name: req.body.for.name,
+		price: req.body.for.price,
+		type: req.body.for.type,
+		description: req.body.for.description,
+		image: req.body.for.image,
+	});
+	const dataToSave = data.save();
+	res.status(200).json(dataToSave);
 });
 app.listen(8000, () =>
 	console.log(`API is running on http://localhost:${port}`)

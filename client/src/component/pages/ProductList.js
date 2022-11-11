@@ -33,9 +33,10 @@ function ProductList() {
 
 	useEffect(async () => {
 		// fetchProducts();
-		let response=await axios.get(("http://localhost:8000/all_product"))
-		console.log("responseive",response.data)
-			dispatch(setProducts(response.data));
+		let response = await axios.get('http://localhost:8000/all_product');
+		console.log('responseive', response.data);
+		
+		dispatch(setProducts(response.data));
 	}, []);
 
 	return (
