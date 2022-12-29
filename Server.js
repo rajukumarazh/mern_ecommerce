@@ -68,10 +68,9 @@ app.post('/create_user', async (req, res) => {
 //Api for payments
 
 var razorpay = new Razorpay({
-	key_id: 'rzp_test_YCMy1DEoOhuNxe',
-	key_secret: '3cQpIGhWXlW80icU36wQFzsW',
+	key_id: 'rzp_test_LUoWzQJZYjdLNB',
+	key_secret: 'gAz9uhd7QvbNqLYP6DT3rHHn',
 });
-
 app.get('/logo.svg', (req, res) => {
 	res.sendFile(path.join(__dirname, 'logo.svg'));
 });
@@ -83,7 +82,7 @@ app.post('/verification', async (req, res) => {
 			req.body;
 
 		// Pass yours key_secret here
-		const key_secret = '3cQpIGhWXlW80icU36wQFzsW';
+		const key_secret = 'gAz9uhd7QvbNqLYP6DT3rHHn';
 
 		// Creating hmac object
 		let hmac = crypto.createHmac('sha256', key_secret);

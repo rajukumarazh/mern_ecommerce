@@ -70,7 +70,7 @@ function CheckOut(props) {
 		// 	.then((res) => res);
 		console.log('data', data);
 		const options = {
-			key: 'rzp_test_YCMy1DEoOhuNxe',
+			key: 'rzp_test_LUoWzQJZYjdLNB',
 			currency: data.currency,
 			amount: data.data?.amount?.toString(),
 			order_id: data.id,
