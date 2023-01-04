@@ -18,6 +18,7 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const { deleteOne } = require('./model');
 const accessTokenSecret = 'youraccesstokensecret';
+const path = require('path');
 const uri =
 	'mongodb+srv://raju:Ra%409058837496@crud.kjkyk5j.mongodb.net/Crud?retryWrites=true&w=majority';
 const options = {
@@ -27,6 +28,7 @@ const options = {
 mongoose.connect(uri, options).then(() => {
 	console.log('database connnected');
 });
+app.use('/static', express.static(path.join(__dirname, './client/build')));
 app.post('/login', async (req, res) => {
 	// Read username and password from request body
 	const { email, password } = req.body;
