@@ -251,9 +251,10 @@ app.post('/addProduct', (req, res) => {
 app.get('*', function (_, res) {
 	res.sendFile(
 		express.static(
-			path.join(__dirname, './client/build/index.html', function (err) {
+			path.join(__dirname, './client/build/index.html'),
+			function (err) {
 				res.status(500).send(err);
-			})
+			}
 		)
 	);
 });
