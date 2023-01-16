@@ -247,6 +247,16 @@ app.post('/addProduct', (req, res) => {
 	const dataToSave = data.save();
 	res.status(200).json(dataToSave);
 });
+//deploying
+app.get('*', function (_, res) {
+	res.sendFile(
+		express.static(
+			path.join(__dirname, './client/build/index.html', function (err) {
+				res.status(500).send(err);
+			})
+		)
+	);
+});
 app.listen(8000, () =>
 	console.log(`API is running on http://localhost:${port}`)
 );
