@@ -28,7 +28,8 @@ const options = {
 mongoose.connect(uri, options).then(() => {
 	console.log('database connnected');
 });
-app.use('/static', express.static(path.join(__dirname, './client/build')));
+app.use(express.static(path.join(__dirname + './client/build/index.html')));
+// app.use('/static', express.static(path.join(__dirname+'./client/build/index.html')));
 app.post('/login', async (req, res) => {
 	// Read username and password from request body
 	const { email, password } = req.body;
@@ -251,7 +252,7 @@ app.post('/addProduct', (req, res) => {
 app.get('*', function (_, res) {
 	res.sendFile(
 		express.static(
-			path.join(__dirname + './client/build/index.html'),
+			path.join(__dirname, './client/build/index.html'),
 			function (err) {
 				res.status(500).send(err);
 			}
