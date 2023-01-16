@@ -13,7 +13,7 @@ const Model = require('./model');
 const soldItem = require('./productModel');
 const allproduct = require('./allproduct');
 const shortid = require('shortid');
-const path = require('path');
+
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const { deleteOne } = require('./model');
